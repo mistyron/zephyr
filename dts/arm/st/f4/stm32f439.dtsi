@@ -8,6 +8,10 @@
 #include <zephyr/dt-bindings/display/panel.h>
 
 / {
+	chosen {
+		zephyr,entropy = &rng;
+	};
+
 	soc {
 		compatible = "st,stm32f439", "st,stm32f4", "simple-bus";
 
@@ -26,6 +30,14 @@
 			interrupt-names = "ltdc", "ltdc_er";
 			clocks = <&rcc STM32_CLOCK(APB2, 26U)>;
 			resets = <&rctl STM32_RESET(APB2, 26U)>;
+			status = "disabled";
+		};
+
+		rng: rng@50060000 {
+			compatible = "st,stm32-rng";
+			reg = <0x50060800 0x3ff>;
+			interrupts = <80 0>;
+			clocks = <&rcc STM32_CLOCK(AHB2, 6U)>;
 			status = "disabled";
 		};
 
